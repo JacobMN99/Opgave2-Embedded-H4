@@ -9,6 +9,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+// Flaget som interruptet sætter, og som main-løkken nulstiller
+volatile uint8_t Timer1_Flag = 0;
+
 // Initialiseringsfunktion til Timer 1 med dynamisk millisekund-beregning
 void Timer1_Init_ms(uint16_t timeout_ms) {
     // 1. Nulstil register for en sikkerheds skyld
@@ -46,7 +49,8 @@ void Timer1_Init_ms(uint16_t timeout_ms) {
 
 // ISR (Interrupt Service Routine) for Timer 1 Compare Match A
 ISR(TIMER1_COMPA_vect) {
-    // Indsæt den kode, der skal udføres ved hvert timeout.
-    // F.eks. toggling af en LED eller flag-sætning til hovedprogrammet.
-    PORTB ^= (1 << GreenLedBit);
+    // Interruptet skal være kort: toggle LED'en og sæt et flag.
+    // Selve udskrivningen på UART1 sker i main-løkken, når den ser flaget.
+    PORTB ^= (1 << TimerLedBit);
+    Timer1_Flag = 1;
 }

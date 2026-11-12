@@ -11,6 +11,6 @@
         "gdbtarget",
         "mplab-core-da"
     ],
-    "cmake.sourceDirectory": "C:/Projekter/MPLAB/Projekt1/cmake/My_Project/default",
+    "cmake.sourceDirectory": "${workspaceFolder}/cmake/My_Project/default",
     "C_Cpp.intelliSenseEngine": "disabled"
 }
